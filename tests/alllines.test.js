@@ -1,18 +1,17 @@
-var rl = require('../index.js');
+const rl = require('../index');
 
-var testFilePath = './tests/file.txt';
+const testFilePath = './tests/file.txt';
 
-describe('alllines()', function() {
-
-  test('read all lines', function(done) {
+describe('alllines()', () => {
+  test('read all lines', (done) => {
     function callback(err, res) {
       expect(res).toStrictEqual({
-        all: "AAAA\r\nBBBB\r\nCCCC\r\n",
+        all: 'AAAA\r\nBBBB\r\nCCCC\r\n',
         row: {
-          "1": "AAAA",
-          "2": "BBBB",
-          "3": "CCCC"
-        }
+          1: 'AAAA',
+          2: 'BBBB',
+          3: 'CCCC',
+        },
       });
       expect(err).toStrictEqual(null);
       done();
@@ -20,16 +19,15 @@ describe('alllines()', function() {
     rl.alllines(testFilePath, callback);
   });
 
-  test('unavailable file', function(done) {
+  test('unavailable file', (done) => {
     function callback(err, res) {
       expect(res).toStrictEqual({
         all: '',
-        row: {}
+        row: {},
       });
       expect(err.message).toStrictEqual(expect.stringMatching(/^ENOENT: no such file or directory, open '.+unavailable.txt'$/));
       done();
     }
     rl.alllines('./tests/unavailable.txt', callback);
   });
-
 });
